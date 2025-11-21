@@ -2,6 +2,8 @@
 # Copyright (c) 2023 Scipp contributors (https://github.com/scipp)
 
 import os
+from typing import NewType, TypeVar
+import sciline as sl
 import scipp as sc
 
 from load import load_ascii, load_nexus
@@ -89,3 +91,62 @@ def load_qens(path: str) -> sc.DataArray:
     da.coords.update(analyzer_info(meta))
 
     return da
+
+
+RunType = TypeVar("RunType")
+
+Elastic = NewType("Elastic", int)
+"""Elastic run."""
+
+KnownQuasiElastic = NewType("KnownQuasiElastic", int)
+"""Quasi-elastic run with known sample."""
+
+UnknownQuasiElastic = NewType("UnknownQuasiElastic", int)
+"""Quasi-elastic run with unknown sample."""
+
+
+CoordTransformGraph = NewType("CoordTransformGraph", dict)
+
+
+class Foldername(sl.Scope[RunType, str], str):
+    """Folder name for a specific run."""
+
+
+class RawData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Raw loaded data."""
+
+
+MaskedRange = NewType("MaskedRange", tuple[float, float])
+"""A range of values to mask, given as a (min, max) tuple."""
+
+
+class MaskedData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data with masked regions."""
+
+
+class EnergyTransfer(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data with energy transfer coordinate."""
+
+
+BinWidth = NewType("BinWidth", sc.Variable)
+"""Width of energy transfer bins."""
+
+
+class EnergyTransferHistogram(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data histogrammed in energy transfer bins."""
+
+
+__all__ = [
+    "RunType",
+    "Elastic",
+    "KnownQuasiElastic",
+    "UnknownQuasiElastic",
+    "CoordTransformGraph",
+    "Foldername",
+    "RawData",
+    "MaskedRange",
+    "MaskedData",
+    "EnergyTransfer",
+    "BinWidth",
+    "EnergyTransferHistogram",
+]
