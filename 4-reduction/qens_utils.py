@@ -124,7 +124,7 @@ class MaskedData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
     """Data with masked regions."""
 
 
-class EnergyTransfer(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+class EnergyTransferData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
     """Data with energy transfer coordinate."""
 
 
@@ -146,7 +146,7 @@ __all__ = [
     "RawData",
     "MaskedRange",
     "MaskedData",
-    "EnergyTransfer",
+    "EnergyTransferData",
     "BinWidth",
     "EnergyTransferHistogram",
 ]
