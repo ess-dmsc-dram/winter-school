@@ -152,16 +152,16 @@ def save_xye(
 RunType = TypeVar("RunType")
 
 
-SampleSiRun = NewType("SampleSiRun", int)
+SampleSi = NewType("SampleSi", int)
 """Sample run; a run with a Si sample in the beam."""
 
-SampleLBCORun = NewType("SampleLBCORun", int)
+SampleLBCO = NewType("SampleLBCO", int)
 """Sample run; a run with a LBCO sample in the beam."""
 
-VanadiumRun = NewType("VanadiumRun", int)
+Vanadium = NewType("Vanadium", int)
 """Vanadium run; a run with a vanadium sample (almost perfect scatterer) in the beam."""
 
-SampleRunType = TypeVar("SampleRunType", SampleSiRun, SampleLBCORun)
+SampleRunType = TypeVar("SampleRunType", SampleSi, SampleLBCO)
 
 
 CoordTransformGraph = NewType("CoordTransformGraph", dict)
@@ -220,9 +220,9 @@ class NormalizedDspacing(sl.Scope[SampleRunType, sc.DataArray], sc.DataArray):
 __all__ = [
     "RunType",
     "SampleRunType",
-    "SampleSiRun",
-    "SampleLBCORun",
-    "VanadiumRun",
+    "SampleSi",
+    "SampleLBCO",
+    "Vanadium",
     "CoordTransformGraph",
     "Foldername",
     "RawData",
