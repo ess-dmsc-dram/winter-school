@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # Copyright (c) 2025 Scipp contributors (https://github.com/scipp)
 
+from typing import NewType, TypeVar
+
 import numpy as np
+import sciline as sl
 import scipp as sc
 
 import matplotlib.pyplot as plt
@@ -144,3 +147,94 @@ def save_xye(
         result.rename_dims(dspacing="tof"),
         header=f"DIFC = {difc.to(unit='us/angstrom').value} [µ/Å] L = {average_l.value} [m] two_theta = {sc.to_unit(average_two_theta, 'deg').value} [deg]\ntof [µs]               Y [counts]               E [counts]",
     )
+
+
+RunType = TypeVar("RunType")
+
+
+SampleSiRun = NewType("SampleSiRun", int)
+"""Sample run; a run with a Si sample in the beam."""
+
+SampleLBCORun = NewType("SampleLBCORun", int)
+"""Sample run; a run with a LBCO sample in the beam."""
+
+VanadiumRun = NewType("VanadiumRun", int)
+"""Vanadium run; a run with a vanadium sample (almost perfect scatterer) in the beam."""
+
+SampleRunType = TypeVar("SampleRunType", SampleSiRun, SampleLBCORun)
+
+
+CoordTransformGraph = NewType("CoordTransformGraph", dict)
+
+
+SourcePosition = NewType("SourcePosition", sc.Variable)
+"""Position of the source."""
+
+TimeOrigin = NewType("TimeOrigin", sc.Variable)
+"""Time origin of the source."""
+
+
+class Foldername(sl.Scope[RunType, str], str):
+    """Folder name for a specific run."""
+
+
+class RawData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Raw loaded data."""
+
+
+class CorrectedData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data with corrected source position and time origin."""
+
+
+class DspacingData(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data with d-spacing coordinate."""
+
+
+TwoThetaBins = NewType("TwoThetaBins", sc.Variable)
+"""Bins for two-theta coordinate."""
+
+DspacingBins = NewType("DspacingBins", sc.Variable)
+"""Bins for d-spacing coordinate."""
+
+
+class HistogramTwothetaDspacing(sl.Scope[RunType, sc.DataArray], sc.DataArray):
+    """Data histogrammed in two-theta and d-spacing bins."""
+
+
+GaussianSmoothingSigma = NewType("GaussianSmoothingSigma", sc.Variable)
+"""Sigma for Gaussian smoothing kernel."""
+
+
+SmoothedVanadium = NewType("SmoothedVanadium", sc.DataArray)
+"""Smoothed vanadium data."""
+
+
+class SampleDspacing(sl.Scope[SampleRunType, sc.DataArray], sc.DataArray):
+    """Sample data summed over two-theta, leaving only d-spacing coordinate."""
+
+
+class NormalizedDspacing(sl.Scope[SampleRunType, sc.DataArray], sc.DataArray):
+    """Normalized sample data in d-spacing."""
+
+
+__all__ = [
+    "RunType",
+    "SampleRunType",
+    "SampleSiRun",
+    "SampleLBCORun",
+    "VanadiumRun",
+    "CoordTransformGraph",
+    "Foldername",
+    "RawData",
+    "CorrectedData",
+    "DspacingData",
+    "TwoThetaBins",
+    "DspacingBins",
+    "HistogramTwothetaDspacing",
+    "GaussianSmoothingSigma",
+    "SmoothedVanadium",
+    "SampleDspacing",
+    "NormalizedDspacing",
+    "SourcePosition",
+    "TimeOrigin",
+]
