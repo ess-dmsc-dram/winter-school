@@ -152,20 +152,14 @@ def save_xye(
 RunType = TypeVar("RunType")
 
 
-SampleSi = NewType("SampleSi", int)
-"""Sample run; a run with a Si sample in the beam."""
+SampleRun = NewType("SampleRun", int)
+"""Sample run; a run with a sample in the beam."""
 
-SampleLBCO = NewType("SampleLBCO", int)
-"""Sample run; a run with a LBCO sample in the beam."""
-
-Vanadium = NewType("Vanadium", int)
+VanadiumRun = NewType("VanadiumRun", int)
 """Vanadium run; a run with a vanadium sample (almost perfect scatterer) in the beam."""
 
-SampleRunType = TypeVar("SampleRunType", SampleSi, SampleLBCO)
-
-
 CoordTransformGraph = NewType("CoordTransformGraph", dict)
-
+"""Graph describing coordinate transformations."""
 
 SourcePosition = NewType("SourcePosition", sc.Variable)
 """Position of the source."""
@@ -209,20 +203,18 @@ SmoothedVanadium = NewType("SmoothedVanadium", sc.DataArray)
 """Smoothed vanadium data."""
 
 
-class SampleDspacing(sl.Scope[SampleRunType, sc.DataArray], sc.DataArray):
-    """Sample data summed over two-theta, leaving only d-spacing coordinate."""
+SampleDspacing = NewType("SampleDspacing", sc.DataArray)
+"""Sample data summed over two-theta, leaving only d-spacing coordinate."""
 
 
-class NormalizedDspacing(sl.Scope[SampleRunType, sc.DataArray], sc.DataArray):
-    """Normalized sample data in d-spacing."""
+NormalizedDspacing = NewType("NormalizedDspacing", sc.DataArray)
+"""Normalized sample data in d-spacing."""
 
 
 __all__ = [
     "RunType",
-    "SampleRunType",
-    "SampleSi",
-    "SampleLBCO",
-    "Vanadium",
+    "SampleRun",
+    "VanadiumRun",
     "CoordTransformGraph",
     "Foldername",
     "RawData",

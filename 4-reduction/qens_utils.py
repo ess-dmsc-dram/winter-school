@@ -106,6 +106,7 @@ UnknownQuasiElastic = NewType("UnknownQuasiElastic", int)
 
 
 CoordTransformGraph = NewType("CoordTransformGraph", dict)
+"""Graph describing coordinate transformations."""
 
 
 class Foldername(sl.Scope[RunType, str], str):
