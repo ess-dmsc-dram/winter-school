@@ -21,6 +21,7 @@ ply
 pooch
 pytest
 pythreejs
+sciline
 scipp
 scippneutron
 scippnexus
