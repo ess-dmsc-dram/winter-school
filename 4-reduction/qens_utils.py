@@ -93,6 +93,7 @@ def load_qens(path: str) -> sc.DataArray:
 
 
 CoordTransformGraph = NewType("CoordTransformGraph", dict)
+"""Graph describing coordinate transformations."""
 
 
 Foldername = NewType("Foldername", str)

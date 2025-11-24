@@ -67,6 +67,7 @@ FlatFieldRun = NewType("FlatFieldRun", int)
 """Flat-field run; a run with no sample in the beam, to measure the beam profile."""
 
 CoordTransformGraph = NewType("CoordTransformGraph", dict)
+"""Graph describing coordinate transformations."""
 
 
 class Foldername(sl.Scope[RunType, str], str):
