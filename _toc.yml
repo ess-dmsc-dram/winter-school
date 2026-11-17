@@ -43,6 +43,7 @@ parts:
   - file: 4-reduction/reduction-powder-diffraction
   - file: 4-reduction/reduction-qens
   - file: 4-reduction/reduction-sans
+  - file: 4-reduction/loki-data
 - caption: Data analysis
   chapters:
   - file: 5-analysis/0-probabilistic_data
