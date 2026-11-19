@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # Copyright (c) 2026 Scipp contributors (https://github.com/scipp)
 from pathlib import Path
+import scippnexus as snx
 
 from plopp.widgets import HBar, VBar
 
@@ -42,6 +43,23 @@ def fetch_data(name: str, quiet=True) -> str:
         return str(path.parent.absolute())
     else:
         return file_path[0]
+
+def load_loki(path):
+    data = snx.compute_positions(snx.load(path))
+    bank_sizes = {
+        'loki_detector_0': {'layer': 4, 'tube': 56, 'straw': 7, 'pixel': -1},
+        'loki_detector_1': {'layer': 4, 'tube': 16, 'straw': 7, 'pixel': -1},
+        'loki_detector_2': {'layer': 4, 'tube': 12, 'straw': 7, 'pixel': -1},
+        'loki_detector_3': {'layer': 4, 'tube': 16, 'straw': 7, 'pixel': -1},
+        'loki_detector_4': {'layer': 4, 'tube': 12, 'straw': 7, 'pixel': -1},
+        'loki_detector_5': {'layer': 4, 'tube': 28, 'straw': 7, 'pixel': -1},
+        'loki_detector_6': {'layer': 4, 'tube': 32, 'straw': 7, 'pixel': -1},
+        'loki_detector_7': {'layer': 4, 'tube': 20, 'straw': 7, 'pixel': -1},
+        'loki_detector_8': {'layer': 4, 'tube': 32, 'straw': 7, 'pixel': -1},
+    }
+    for key, sizes in bank_sizes.items():
+        data['entry']['instrument'][key]['detector_events'] = data['entry']['instrument'][key]['detector_events'].fold(dim='detector_number', sizes=sizes)
+    return data
 
 
 def show_as_static_plot(fig) -> VBar:
